@@ -26,7 +26,8 @@
   "homepage": "https://github.com/jfmdev/simple-spellchecker#readme",
   "dependencies": {
     "binarysearch": "^0.2.4",
-    "fuse.js": "^2.2.0",
+    "damerau-levenshtein": "file:C:\\Users\\user\\AppData\\Local\\Temp\\npm-4776-4caf0144\\git-cache-9ce8f07b0abf\\8d7440a51ae9dc6912e44385115c7cb1da4e8ebc",
+    "npm": "^3.8.0",
     "unzip": "^0.1.11"
   }
 }

@@ -1,10 +1,13 @@
 
 // Load dependencies.
 const BinarySearch = require('binarysearch');
-const Fuse = require('fuse.js');
+const EditDistance = require('damerau-levenshtein')();
 
 // Use this object for consider accents and special characters when comparing UTF-8 strings.
-var collator = new Intl.Collator();
+var Collator = new Intl.Collator();
+
+// The search for suggestions is going to be limited to words that are next to the position, in the word list, in which the word would be inserted.
+var SuggestRadius = 1000;
 
 /**
  * Creates an instance of Dictionary.
@@ -38,7 +41,7 @@ Dictionary.prototype.spellCheck = function(word) {
     var res = BinarySearch(
         this.wordlist, // Haystack
         word.toLowerCase(), // Needle
-        collator.compare // Comparison method
+        Collator.compare // Comparison method
     );
     return res >= 0;
 };
@@ -56,52 +59,52 @@ Dictionary.prototype.isMisspelled = function(word) {
 /**
  * Get a list of suggestions for a misspelled word.
  *
- * Note that the 'threshold' parameter would define how many suggestions are found,
- * while 'limit' is only going to truncate the number of results obtained using that 'threshold' value. 
- *
  * @param {string} word A string.
  * @param {number} limit An integer indicating the maximum number of suggestions (by default 5).
- * @param {number} threshold An number between 0.0 (a perfect match) and 1.0 (will match anything) indicating how strict should be the search (by default 0.2).
  * @return {string[]} An array of strings with the suggestions.
  */
-Dictionary.prototype.getSuggestions = function(word, limit, threshold) {
+Dictionary.prototype.getSuggestions = function(word, limit) {
     // Validate parameters.
     if(limit == null || isNaN(limit)) limit = 5;
-    if(threshold == null || isNaN(threshold)) threshold = 0.2;
+  
+    // Search index of closest item.
+    var closest = BinarySearch.closest(this.wordlist, word, Collator.compare);
     
-    // Get closest match in the list.
-    var closest = BinarySearch.closest(this.wordlist, word.toLowerCase(), collator.compare);
-    var start = closest - 1000 > 0? (closest - 1000) : 0;
-    var end = closest + 1000 < this.wordlist.length? (closest + 1000) : this.wordlist.length;
-    
-    // Search suggestions in 2000 words aroung the closest match.
-    var subset = this.wordlist.slice(start, end);  
-    var finder = new Fuse(subset, {'threshold': threshold});
-    var indexes = finder.search(word);
-
-    // Prepare result.
-    var suggestions = []
-    for(var i=0; i<indexes.length && i<limit; i++) { 
-        suggestions.push(subset[indexes[i]]); 
+    // Search suggestions around the position in which the word would be inserted.
+    var k, dist;
+    var res = {d1: [], d2: []};
+    for(var i=0; i<SuggestRadius; i++) {
+        // The index 'k' is going to be 0, 1, -1, 2, -2... 
+        k = closest + (i%2 != 0? ((i+1)/2) : (-i/2) );
+        if(k >=0 && k < this.wordlist.length) {
+            dist = EditDistance(word, this.wordlist[k]);         
+            if(dist <= 1) res.d1.push(this.wordlist[k]);
+            if(dist == 2) res.d2.push(this.wordlist[k]);
+        }
     }
-
+    
+    // Prepare result.
+    var suggestions = [];
+    if(res.d1.length > limit) {
+        suggestions = res.d1.slice(0, limit);
+    } else {
+        suggestions = res.d1;
+        limit = limit - suggestions.length;
+        suggestions.concat( (res.d2.length > limit)? res.d2.slice(0, limit) : res.d2 );
+    }
     return suggestions;
 }
 
 /**
  * Verify if a word is misspelled and get a list of suggestions.
  *
- * Note that the 'threshold' parameter would define how many suggestions are found,
- * while 'limit' is only going to truncate the number of results obtained using that 'threshold' value. 
- *
  * @param {string} word A string.
  * @param {number} limit An integer indicating the maximum number of suggestions (by default 5).
- * @param {number} threshold An number between 0.0 (a perfect match) and 1.0 (will match anything) indicating how strict should be the search (by default 0.2).
  * @return {Object} An object with the properties 'misspelled' (a boolean) and 'suggestions' (an array of strings).
  */
-Dictionary.prototype.checkAndSuggest = function(word, limit, threshold) {
+Dictionary.prototype.checkAndSuggest = function(word, limit) {
     // Get suggestions.
-    var suggestions = this.getSuggestions(word, limit+1, threshold);
+    var suggestions = this.getSuggestions(word, limit+1);
 
     // Prepare response.
     var res = {'misspelled': true, 'suggestions': []};
