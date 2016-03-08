@@ -2,7 +2,10 @@
 // Load dependencies.
 const BinarySearch = require('binarysearch');
 const Fuse = require('fuse.js');
-    
+
+// Use this object for consider accents and special characters when comparing UTF-8 strings.
+var collator = new Intl.Collator();
+
 /**
  * Creates an instance of Dictionary.
  *
@@ -35,12 +38,7 @@ Dictionary.prototype.spellCheck = function(word) {
     var res = BinarySearch(
         this.wordlist, // Haystack
         word.toLowerCase(), // Needle
-        function(value, find) { // Comparison method
-            value = value.toLowerCase();
-            if(value > find) return 1;
-            else if(value < find) return -1;
-            return res;
-        }
+        collator.compare // Comparison method
     );
     return res >= 0;
 };
@@ -69,7 +67,7 @@ Dictionary.prototype.isMisspelled = function(word) {
 Dictionary.prototype.getSuggestions = function(word, limit, threshold) {
     // Validate parameters.
     if(limit == null || isNaN(limit)) limit = 5;
-    if(threshold == null || isNaN(threshold)) threshold = 0.18;
+    if(threshold == null || isNaN(threshold)) threshold = 0.15;
     
     // Search suggestions.
     var finder = new Fuse(this.wordlist, {'threshold': threshold});

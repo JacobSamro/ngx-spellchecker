@@ -4,7 +4,7 @@ const fs = require('fs');
 const unzip = require('unzip');
 const Dictionary = require('./dictionary.js');
 
-const FOLDER_PATH = './dictionaries';
+const FOLDER_PATH = './dict';
 
 // Define module.
 var SpellChecker = {
