@@ -1,0 +1,32 @@
+{
+  "name": "simple-spellchecker",
+  "version": "0.9.0",
+  "description": "A simple spellchecker compatible with Electron",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jfmdev/simple-spellchecker.git"
+  },
+  "keywords": [
+    "simple",
+    "spell",
+    "checker",
+    "electron",
+    "provider",
+    "spellcheck"
+  ],
+  "author": "JFMDev",
+  "license": "LGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/jfmdev/simple-spellchecker/issues"
+  },
+  "homepage": "https://github.com/jfmdev/simple-spellchecker#readme",
+  "dependencies": {
+    "binarysearch": "^0.2.4",
+    "fuse.js": "^2.2.0",
+    "unzip": "^0.1.11"
+  }
+}
