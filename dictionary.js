@@ -61,22 +61,28 @@ Dictionary.prototype.isMisspelled = function(word) {
  *
  * @param {string} word A string.
  * @param {number} limit An integer indicating the maximum number of suggestions (by default 5).
- * @param {number} threshold An number between 0.0 (a perfect match) and 1.0 (will match anything) indicating how strict should be the search (by default 0.18).
+ * @param {number} threshold An number between 0.0 (a perfect match) and 1.0 (will match anything) indicating how strict should be the search (by default 0.2).
  * @return {string[]} An array of strings with the suggestions.
  */
 Dictionary.prototype.getSuggestions = function(word, limit, threshold) {
     // Validate parameters.
     if(limit == null || isNaN(limit)) limit = 5;
-    if(threshold == null || isNaN(threshold)) threshold = 0.15;
+    if(threshold == null || isNaN(threshold)) threshold = 0.2;
     
-    // Search suggestions.
-    var finder = new Fuse(this.wordlist, {'threshold': threshold});
+    // Get closest match in the list.
+    var closest = BinarySearch.closest(this.wordlist, word.toLowerCase(), collator.compare);
+    var start = closest - 1000 > 0? (closest - 1000) : 0;
+    var end = closest + 1000 < this.wordlist.length? (closest + 1000) : this.wordlist.length;
+    
+    // Search suggestions in 2000 words aroung the closest match.
+    var subset = this.wordlist.slice(start, end);  
+    var finder = new Fuse(subset, {'threshold': threshold});
     var indexes = finder.search(word);
 
     // Prepare result.
     var suggestions = []
     for(var i=0; i<indexes.length && i<limit; i++) { 
-        suggestions.push(this.wordlist[indexes[i]]); 
+        suggestions.push(subset[indexes[i]]); 
     }
 
     return suggestions;
@@ -90,7 +96,7 @@ Dictionary.prototype.getSuggestions = function(word, limit, threshold) {
  *
  * @param {string} word A string.
  * @param {number} limit An integer indicating the maximum number of suggestions (by default 5).
- * @param {number} threshold An number between 0.0 (a perfect match) and 1.0 (will match anything) indicating how strict should be the search (by default 0.18).
+ * @param {number} threshold An number between 0.0 (a perfect match) and 1.0 (will match anything) indicating how strict should be the search (by default 0.2).
  * @return {Object} An object with the properties 'misspelled' (a boolean) and 'suggestions' (an array of strings).
  */
 Dictionary.prototype.checkAndSuggest = function(word, limit, threshold) {
