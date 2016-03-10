@@ -7,6 +7,7 @@ var dictionary = SpellChecker.getDictionarySync("en-US");
 // Make simple tests.
 console.log("spellCheck('house') = ", dictionary.spellCheck('house'));
 console.log("checkAndSuggest('house') = ", dictionary.checkAndSuggest('house'));
+console.log("");
 console.log("spellCheck('housec') = ", dictionary.spellCheck('housec'));
 console.log("isMisspelled('housec') = ", dictionary.isMisspelled('housec'));
 console.log("getSuggestions('housec') = ", dictionary.getSuggestions('housec'));
@@ -22,11 +23,11 @@ SpellChecker.getDictionary("fr-FR", function(err, otherDictionary) {
         // Make simple tests.
         console.log("spellCheck('maison') = ", otherDictionary.spellCheck('maison'));
         console.log("checkAndSuggest('maison') = ", otherDictionary.checkAndSuggest('maison'));
+        console.log("");
         console.log("spellCheck('maisonc') = ", otherDictionary.spellCheck('maisonc'));
         console.log("isMisspelled('maisonc') = ", otherDictionary.isMisspelled('maisonc'));
         console.log("getSuggestions('maisonc') = ", otherDictionary.getSuggestions('maisonc'));
         console.log("checkAndSuggest('maisonc') = ", otherDictionary.checkAndSuggest('maisonc'));
-        
     }
     
     // Finish process. 

@@ -1,7 +1,7 @@
 Simple Spellchecker
 ===================
 
-> A simple spellchecker compatible with Electron
+> A simple and fast spellchecker with spelling suggestions and Electron's integration
 
 
 Features

@@ -1,6 +1,7 @@
 
 // Load modules.
 var fs = require('fs');
+const StripBOM = require('strip-bom');
 
 // Read parameters.
 var input_file = process.argv.length > 2? process.argv[2] : null;
@@ -11,6 +12,7 @@ if(input_file != null) {
     if(fs.existsSync(input_file)) {
         console.log("Reading file...");
         var content = fs.readFileSync(input_file, 'utf8');
+        content = StripBOM(content);
         content = content.replace(/\r/g, '');
 
         console.log("Sorting lines...");

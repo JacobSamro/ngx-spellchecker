@@ -11,14 +11,18 @@ var SpellChecker = {
     /**
      * Create a dictionary from a file, which might be either a .dic or a .zip file.
      *
-     * @param {String} lang The name of the language to check (and that also matchs a file with a word list).
+     * @param {String} fileName The name of the file from which read the word list.
+     * @param {String} folderPath The path to the directory in which the file is located (optional).
      * @param {Callback} callback A function to invoke when either the dictionary was created or an error was found.
      */  
-    getDictionary: function(lang, callback) {
+    getDictionary: function(fileName, folderPath) {
         try{
-            var dic_path = FOLDER_PATH + '/' + lang + '.dic';
-            var zip_path = FOLDER_PATH + '/' + lang + '.zip';
-          
+            // Initialize variables.
+            var folder = (!folderPath || typeof folderPath != 'string')? FOLDER_PATH : folderPath;
+            var callback = arguments[arguments.length - 1];
+            var dic_path = folder + '/' + fileName + '.dic';
+            var zip_path = folder + '/' + fileName + '.zip';
+            
             // Verify if the dictionary file exists.
             fs.exists(dic_path, function(exists) {
                 if(exists) {
@@ -35,7 +39,7 @@ var SpellChecker = {
                             });
                         } else {
                             // The ZIP file also doesn't exists, return an error.
-                            callback('The dicctionary file could not be found for the language "' + lang + '"', null);
+                            callback('The dicctionary could not be created, no file with the name "' + fileName + '" could be found', null);
                         } 
                     });
                 }
@@ -70,14 +74,17 @@ var SpellChecker = {
     /**
      * Create a dictionary from a .dic file .
      *
-     * @param {string} lang The name of the language to check (and that also matchs a file with a word list).
+     * @param {String} fileName The name of the file from which read the word list.
+     * @param {String} folderPath The path to the directory in which the file is located (optional).
      * @return {Object} An instance of the Dictionary class.
      * @throws {Exception} If the dictionary's file can't be found or is invalid.
      */  
-    getDictionarySync: function(lang) {
+    getDictionarySync: function(fileName, folderPath) {
         try{
-            var dic_path = FOLDER_PATH + '/' + lang + '.dic';
-            var zip_path = FOLDER_PATH + '/' + lang + '.zip';
+            // Initialize variables.
+            var folder = (!folderPath || typeof folderPath != 'string')? FOLDER_PATH : folderPath;
+            var dic_path = folder + '/' + fileName + '.dic';
+            var zip_path = folder + '/' + fileName + '.zip';
           
             // Verify if the dictionary file exists.
             if(fs.existsSync(dic_path)) {
@@ -87,7 +94,7 @@ var SpellChecker = {
                 return dictionary;
             } else {
                 // The file do not exists, throw an error (only the asynchronous versions of this method unzip the compressed files).
-                throw new Error('The diccionary file could not be found for the language "' + lang + '"');
+                throw new Error('The dicctionary could not be created, no file with the name "' + fileName + '" could be found');
             }
         } catch(err) {
             // Throw an error.
