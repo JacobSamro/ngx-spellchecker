@@ -67,6 +67,9 @@ Parameters:
  * `fileName`: The name of the dictionary's file. The file must have `.dic` extension.
  * `folderPath`: The folder in which the dictionary's file is located. This parameter is optional, by default it assumes that the file is in the `dict` folder.
 
+Returns:
+ * A `Dictionary` object. 
+
 Example: 
 
 ```javascript
@@ -98,7 +101,10 @@ The `Dictionary` class has six public methods: `getLength()`,  `setWordlist()`, 
 
 #### getLength()
 
-This method returns the quantity of words that the dictionary has.
+This method allows to get the quantity of words that the dictionary has.
+
+Returns:
+ * An integer with the number of words. 
 
 #### setWordlist(wordlist)
 
@@ -114,6 +120,9 @@ This method allows to verify is a word is correctly written or not.
 Parameter:
  * `word`: the word to verify.
 
+Returns:
+ * `true` if the word is in the dictionary, `false` if not. 
+
 #### isMisspelled(word)
 
 This method allows to verify is a word is misspelled or not.
@@ -121,6 +130,9 @@ This method allows to verify is a word is misspelled or not.
 Parameter:
  * `word`: the word to verify.
 
+Returns:
+ * `true` if the word is misspelled, `false` if not
+ * 
 #### getSuggestions(word [, limit] [, maxDistance])
 
 This method allows to get spelling suggestions for a word.
@@ -129,6 +141,9 @@ Parameters:
  * `word`: the word used to generate the suggestions.
  * `limit`: the maximum number of suggestions to get (by default, 5).
  * `maxDistance`: the maximum _edit distance_ that a word can have from the `word` parameter, in order to being considered as a valid suggestion (by default, 2).
+
+Returns:
+ * An array of strings.
 
 #### checkAndSuggest(word [, limit] [, maxDistance])
 
@@ -139,6 +154,8 @@ Parameters:
  * `limit`: the maximum number of suggestions to get (by default, 5).
  * `maxDistance`: the maximum _edit distance_ that a word can have from the `word` parameter, in order to being considered as a valid suggestion (by default, 2).
 
+Returns:
+ * An object with the fields `misspelled`, which contains a boolean, and `suggestions`, which contains an array of strings.
 
 Add dictionaries
 ----------------
