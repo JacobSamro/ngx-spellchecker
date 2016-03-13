@@ -33,7 +33,7 @@ if(action == 'normalize') {
     var outputFile = process.argv.length > 4? process.argv[4] : null;
     
     // Get dictionary.
-    var dictionary = SpellChecker.normalizeDictionary(inputFile, outputFile, function(err, success) {
+    SpellChecker.normalizeDictionary(inputFile, outputFile, function(err, success) {
         // Show result.
         if(err) {
             console.log(err);

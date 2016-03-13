@@ -26,7 +26,7 @@ function Dictionary(wordlist) {
  *
  * @return {number} The number of words in the dictionary.
  */
-Dictionary.prototype.getLength = function(wordlist) {
+Dictionary.prototype.getLength = function() {
     return this.wordlist != null? this.wordlist.length : 0;
 };
 
@@ -114,11 +114,12 @@ Dictionary.prototype.getSuggestions = function(word, limit, maxDistance) {
  *
  * @param {string} word A string.
  * @param {number} limit An integer indicating the maximum number of suggestions (by default 5).
+ * @param {number} maxDistance An integer indicating the maximum edit distance between the word and the suggestions (by default 3).
  * @return {Object} An object with the properties 'misspelled' (a boolean) and 'suggestions' (an array of strings).
  */
-Dictionary.prototype.checkAndSuggest = function(word, limit) {
+Dictionary.prototype.checkAndSuggest = function(word, limit, maxDistance) {
     // Get suggestions.
-    var suggestions = this.getSuggestions(word, limit+1);
+    var suggestions = this.getSuggestions(word, limit+1, maxDistance);
     
     // Prepare response.
     var res = {'misspelled': true, 'suggestions': []};
