@@ -201,7 +201,47 @@ If you don't want to override the original file, you can specify the path for an
 Electron's integration
 ----------------------
 
-...
+There are several ways in which you can integrate this module with Electron. But if you want a starting point, the following example shows how to enable the English dictionary:
+
+**1)** Install the module as a dependency of your project (`npm install simple-spellchecker --save`).
+
+**2)** In the main process, require the module an load the dictionary, and define a function to access to their methods:
+
+```javascript
+// Initialization.
+var SpellChecker = require('simple-spellchecker');
+var myDictionary = null;
+
+// Load dictionary.
+SpellChecker.getDictionary("en-US", "./node_modules/simple-spellchecker/dict", function(err, result) {
+    if(!err) {
+        myDictionary = result;
+    }
+});
+
+// Define function for consult the dictionary.
+ipcMain.on('checkspell', function(event, word) {
+    var res = null;
+    if(myDictionary != null && word != null) {
+        res = myDictionary.spellCheck(word);
+    }
+    event.returnValue = res;
+});
+```
+
+**3)** In the renderer process, define a spell checker provider that uses the previously loaded dictionary.
+
+```javascript
+// Get web frame.
+var webFrame = require('electron').webFrame;
+
+webFrame.setSpellCheckProvider("en-US", false, {
+    spellCheck: function(text) {      
+        var res = ipcRenderer.sendSync('checkspell', text);
+        return res != null? res : true;
+    }
+});
+```
 
 License
 -------
