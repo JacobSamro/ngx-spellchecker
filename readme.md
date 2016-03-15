@@ -132,7 +132,7 @@ Parameter:
 
 Returns:
  * `true` if the word is misspelled, `false` if not
- * 
+
 #### getSuggestions(word [, limit] [, maxDistance])
 
 This method allows to get spelling suggestions for a word.
@@ -185,7 +185,7 @@ In order to test a dictionary file, you must execute the script indicating the f
 
 For example, the following sentence will search in the `dict` folder a dictionary which is either in the file `en-GB.dic` or `en-GB.zip`, and is going to verify if the word `house` is misspelled or not and is going to search some spelling suggestions.
 
-    node cli.js check "./dict" en-GB  house
+    node cli.js check "./dict" en-GB house
     
 
 ### Normalize
