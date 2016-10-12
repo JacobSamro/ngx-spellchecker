@@ -40,7 +40,7 @@ var SpellChecker = {
                             });
                         } else {
                             // The ZIP file also doesn't exists, return an error.
-                            callback('The dicctionary could not be read, no file with the name "' + fileName + '" could be found', null);
+                            callback('The dictionary could not be read, no file with the name "' + fileName + '" could be found', null);
                         } 
                     });
                 }
@@ -94,7 +94,7 @@ var SpellChecker = {
                 return dictionary;
             } else {
                 // The file do not exists, throw an error (only the asynchronous versions of this method unzip the compressed files).
-                throw new Error('The dicctionary could not be created, no file with the name "' + fileName + '" could be found');
+                throw new Error('The dictionary could not be created, no file with the name "' + fileName + '" could be found');
             }
         } catch(err) {
             // Throw an error.
