@@ -34,7 +34,7 @@ var SpellChecker = {
                     fs.exists(zip_path, function(exists) {
                         if(exists) {
                             // The file ZIP exists, unzip it.
-                            fs.createReadStream(zip_path).pipe( unzip.Extract({ path: folderPath }) ).on('close', function() {
+                            fs.createReadStream(zip_path).pipe( unzip.Extract({ path: folder }) ).on('close', function() {
                                 // The file was extracted, now read it.
                                 SpellChecker._readFile(dic_path, callback);
                             });
