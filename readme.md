@@ -205,7 +205,7 @@ There are several ways in which you can integrate this module with Electron. But
 
 **1)** Install the module as a dependency of your project (`npm install simple-spellchecker --save`).
 
-**2)** In the main process, require the module an load the dictionary, and define a function to access to their methods:
+**2)** In the main process, require the module, load the dictionary, and define a function to access to his methods:
 
 ```javascript
 // Initialization.

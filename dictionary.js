@@ -4,8 +4,8 @@ const BinarySearch = require('binarysearch');
 const EditDistance = require('damerau-levenshtein')();
 
 // Use this object for consider accents and special characters when comparing UTF-8 strings.
-var Collator = new Intl.Collator();
-
+var Collator = new Intl.Collator(undefined, {'sensitivity': 'accent'});
+ 
 // The search for suggestions is going to be limited to words that are next to the position, in the word list, in which the word would be inserted.
 var SuggestRadius = 1000;
 

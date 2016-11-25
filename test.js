@@ -5,8 +5,8 @@ const SpellChecker = require('./index.js');
 var dictionary = SpellChecker.getDictionarySync("en-US");
 
 // Make simple tests.
-console.log("spellCheck('house') = ", dictionary.spellCheck('house'));
-console.log("checkAndSuggest('house') = ", dictionary.checkAndSuggest('house'));
+console.log("spellCheck('December') = ", dictionary.spellCheck('December'));
+console.log("checkAndSuggest('December') = ", dictionary.checkAndSuggest('December'));
 console.log("");
 console.log("spellCheck('housec') = ", dictionary.spellCheck('housec'));
 console.log("isMisspelled('housec') = ", dictionary.isMisspelled('housec'));
