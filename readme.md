@@ -243,6 +243,11 @@ webFrame.setSpellCheckProvider("en-US", false, {
 });
 ```
 
+Unit testing
+------------
+
+The module is partially tested by the file `test.js` (using _Mocha_ and _Chai_). In order to run the tests, just execute the command `npm test`.
+
 License
 -------
 
