@@ -105,4 +105,35 @@ describe("Dictionary methods", function() {
             expect(res.suggestions.length).to.be.above(0);
         });
     });
+
+    describe("addRegex() and clearRegexs()", function() {
+        it("should validate numbers", function() {
+            expect(dictionary.spellCheck('1234')).to.be.false;
+            expect(dictionary.spellCheck('1234.45')).to.be.false;
+            dictionary.addRegex(/^-?\d*\.?\d*$/);
+            expect(dictionary.spellCheck('1234')).to.be.true;
+            expect(dictionary.spellCheck('1234.45')).to.be.true;
+            dictionary.clearRegexs();
+        });
+        it("should validate emails", function() {
+            expect(dictionary.spellCheck('john@doe.com')).to.be.false;
+            expect(dictionary.spellCheck('jane@doe.net')).to.be.false;
+            expect(dictionary.spellCheck('jane@joe')).to.be.false;
+            dictionary.addRegex(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
+            expect(dictionary.spellCheck('john@doe.com')).to.be.true;
+            expect(dictionary.spellCheck('jane@doe.net')).to.be.true;
+            expect(dictionary.spellCheck('jane@joe')).to.be.false;
+            dictionary.clearRegexs();
+        });
+        it("should validate URLs", function() {
+            expect(dictionary.spellCheck('https://www.test.com')).to.be.false;
+            expect(dictionary.spellCheck('http://www.test.com')).to.be.false;
+            expect(dictionary.spellCheck('http://test.com')).to.be.false;
+            dictionary.addRegex(/(https?:\/\/(?:www\.|(?!www))[^\s\.]+\.[^\s]{2,}|www\.[^\s]+\.[^\s]{2,})/);
+            expect(dictionary.spellCheck('https://www.test.com')).to.be.true;
+            expect(dictionary.spellCheck('http://www.test.com')).to.be.true;
+            expect(dictionary.spellCheck('http://test.com')).to.be.true;
+            dictionary.clearRegexs();
+        });
+    });    
 });

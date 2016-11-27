@@ -19,6 +19,7 @@ var SuggestRadius = 1000;
 function Dictionary(wordlist) {
     this.wordlist = [];
     this.setWordlist(wordlist);
+    this.clearRegexs();
 }
 
 /**
@@ -46,6 +47,11 @@ Dictionary.prototype.setWordlist = function(wordlist) {
  * @return {bool} 'true' if the word is in the dictionary, 'false' otherwise.
  */
 Dictionary.prototype.spellCheck = function(word) {
+    // Verify if the word satifies one of the regular expressions.
+    for(var i=0; i<this.regexs.length; i++) {
+        if(this.regexs[i].test(word)) return true;
+    }
+  
     // Since the list is sorted, is more fast to do a binary search than 'this.wordlist.indexOf(word)'.
     var res = BinarySearch(
         this.wordlist, // Haystack
@@ -127,9 +133,33 @@ Dictionary.prototype.checkAndSuggest = function(word, limit, maxDistance) {
     res.suggestions = suggestions;
     if(res.misspelled && (suggestions.length > limit)) res.suggestions = suggestions.slice(0, limit);
     if(!res.misspelled) res.suggestions = suggestions.slice(1, suggestions.length);
+
+    // Verify if the word satifies one of the regular expressions.
+    if(res.misspelled) {
+        for(var i=0; i<this.regexs.length; i++) {
+            if(this.regexs[i].test(word)) res.misspelled = false;
+        }
+    }
     
     return res;
 }
+
+/**
+ * Adds a regular expression that will be used to verify if a word is valid even though is not on the dictionary.
+ * Useful indicate that numbers, URLs and emails should not be marked as misspelled words.
+ *
+ * @param {RegEx} regexp A regular expression.
+ */
+Dictionary.prototype.addRegex = function(regex) {
+    this.regexs.push(regex);
+};
+
+/**
+ * Clear the list of regultar expressions used to verify if a word is valid even though is not on the dictionary.
+ */
+Dictionary.prototype.clearRegexs = function() {
+    this.regexs = [];
+};
 
 // Export class.
 module.exports = Dictionary;
