@@ -19,7 +19,7 @@
     "spellcheck"
   ],
   "author": "JFMDev",
-  "license": "LGPL-3.0",
+  "license": "MPL-2.0",
   "bugs": {
     "url": "https://github.com/jfmdev/simple-spellchecker/issues"
   },
