@@ -157,18 +157,18 @@ Parameters:
 Returns:
  * An object with the fields `misspelled`, which contains a boolean, and `suggestions`, which contains an array of strings.
 
-#### addRegexp(regexp)
+#### addRegex(regex)
 
-This method adds a regular expression that will be used to verify if a word is valid even though is not on the dictionary.
+This method adds a regular expression that will be used to verify if a word is valid even though is not in the dictionary.
 
-This might useful for avoid marking as misspelled some special words, such as that numbers, emails or URL addresses.
+This might be useful when avoiding marking special words as misspelled, such as numbers, emails, or URL addresses.
 
 Parameters:
  * `regex`: a regular expression object.
 
-#### clearRegexp
+#### clearRegex
 
-This methods removes all previous regular expressions added using the mehod `addRegexp()`.
+This method removes all previous regular expressions added using the method `addRegex()`.
 
 Add dictionaries
 ----------------
