@@ -6,7 +6,7 @@
 
 // Load dependencies.
 const fs = require('fs');
-const unzip = require('unzip');
+const unzip = require('unzip-stream');
 const stripBOM = require('strip-bom');
 const Dictionary = require('./dictionary.js');
 
