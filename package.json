@@ -1,6 +1,6 @@
 {
   "name": "simple-spellchecker",
-  "version": "0.9.4",
+  "version": "0.9.5",
   "description": "A simple spellchecker compatible with Electron",
   "main": "index.js",
   "scripts": {
