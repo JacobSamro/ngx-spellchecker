@@ -10,7 +10,7 @@ const unzip = require('unzip-stream');
 const stripBOM = require('strip-bom');
 const Dictionary = require('./dictionary.js');
 
-const FOLDER_PATH = './dict';
+const FOLDER_PATH = __dirname + '/dict';
 
 // Define module.
 var SpellChecker = {
