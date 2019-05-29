@@ -1,7 +1,7 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 
 import { SpellCheckerService } from '../services/spellchecker.service';
-import { HttpClientModule, HttpClient, HttpHandler } from '@angular/common/http';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 
 @NgModule({
     declarations: [
@@ -26,7 +26,7 @@ import { HttpClientModule, HttpClient, HttpHandler } from '@angular/common/http'
 export class SpellCheckerModule {
 
     /**
-     * Use in AppModule: new instance of SumService.
+     * Use in AppModule: new instance of SpellCheckerService.
      */
     public static forRoot(): ModuleWithProviders<SpellCheckerModule> {
         return {
@@ -36,7 +36,7 @@ export class SpellCheckerModule {
     }
 
     /**
-     * Use in features modules with lazy loading: new instance of SumService.
+     * Use in features modules with lazy loading: new instance of SpellCheckerService.
      */
     public static forChild(): ModuleWithProviders<SpellCheckerModule> {
         return {

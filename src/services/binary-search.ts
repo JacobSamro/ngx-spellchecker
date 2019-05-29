@@ -3,10 +3,10 @@
 export class BinarySearch {
 
 
-  constructor(arr: any, search: any, comparitor: any) {
-    if (!arr) return;
+  init(arr: any, search: any, comparitor: any) {
+    if (!arr) return -1;
     // as long as it has a length i will try and itterate over it.
-    if (arr.length === undefined) return;
+    if (arr.length === undefined) return -1;
 
     if (!comparitor) comparitor = BinarySearch._defaultComparitor();
 
@@ -130,9 +130,9 @@ export class BinarySearch {
   }
 
   static _defaultComparitor() {
-    var indexMode: boolean | undefined, indexModeSearch: boolean;
-    var stringMode: boolean | undefined;
-    return function (v: any, search: any) {
+    var indexMode, indexModeSearch;
+    var stringMode;
+    return function (v, search) {
       // support the object format of generated indexes
       if (indexMode === undefined) {
         if (typeof v === 'object' && v.hasOwnProperty('v')) indexMode = true;

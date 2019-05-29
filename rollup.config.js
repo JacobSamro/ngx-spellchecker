@@ -34,14 +34,12 @@ import sourcemaps from 'rollup-plugin-sourcemaps';
 const globals = {
     '@angular/core': 'ng.core',
     '@angular/common': 'ng.common',
-    '@angular/common/http': 'ng.common.http',
-    'rxjs/Observable': 'Rx',
-    'rxjs/Observer': 'Rx',
-    'rxjs/Subject': 'Rx',
-    'rxjs/observable/of': 'Rx.Observable',
-    'rxjs/operator/concatMap': 'Rx.Observable.prototype',
-    'rxjs/operator/filter': 'Rx.Observable.prototype',
-    'rxjs/operator/map': 'Rx.Observable.prototype',
+    '@angular/common/http': 'ng.commmon.http',
+    '@angular/forms': 'ng.forms',
+    '@angular/router': 'ng.router',
+    '@angular/platform-browser': 'ng.platformBrowser',
+    'rxjs': 'rxjs',
+    'rxjs/operators': 'rxjs.operators'
 };
 
 export default {
