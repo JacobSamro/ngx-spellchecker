@@ -1,7 +1,7 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 
 import { SpellCheckerService } from '../services/spellchecker.service';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpClient, HttpHandler } from '@angular/common/http';
 
 @NgModule({
     declarations: [
@@ -14,8 +14,9 @@ import { HttpClientModule } from '@angular/common/http';
         // Directives.
         // Components.
     ],
+    imports: [
+    ],
     providers: [
-        HttpClientModule
     ]
 })
 // Consider registering providers using a forRoot() method
