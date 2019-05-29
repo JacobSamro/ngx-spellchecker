@@ -1,4 +1,4 @@
-
+//https://raw.githubusercontent.com/soldair/node-binarysearch/master/index.js
 
 export class BinarySearch {
 

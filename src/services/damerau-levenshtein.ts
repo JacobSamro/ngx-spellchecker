@@ -1,3 +1,5 @@
+//https://github.com/cbaatz/damerau-levenshtein/blob/master/damerau-levenshtein.js
+
 export class DamerauLevenshtein {
 
 
