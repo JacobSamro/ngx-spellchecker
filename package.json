@@ -1,37 +1,98 @@
 {
-  "name": "simple-spellchecker",
-  "version": "0.9.8",
-  "description": "A simple spellchecker compatible with Electron",
-  "main": "index.js",
-  "scripts": {
-    "test": "mocha test.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/jfmdev/simple-spellchecker.git"
-  },
-  "keywords": [
-    "simple",
-    "spell",
-    "checker",
-    "electron",
-    "provider",
-    "spellcheck"
-  ],
-  "author": "JFMDev",
-  "license": "MPL-2.0",
-  "bugs": {
-    "url": "https://github.com/jfmdev/simple-spellchecker/issues"
-  },
-  "homepage": "https://github.com/jfmdev/simple-spellchecker#readme",
-  "dependencies": {
-    "binarysearch": "^0.2.4",
-    "damerau-levenshtein": "git://github.com/cbaatz/damerau-levenshtein.git",
-    "strip-bom": "^2.0.0",
-    "unzip-stream": "^0.3.0"
-  },
-  "devDependencies": {
-    "chai": "^3.5.0",
-    "mocha": "^3.2.0"
-  }
+    "name": "ngx-spellchecker",
+    "private": true,
+    "version": "0.0.1",
+    "description": "Build an Angular library compatible with AoT compilation and Tree shaking like an official package",
+    "main": "./bundles/ngx-spellchecker.umd.js",
+    "module": "./fesm5/ngx-spellchecker.js",
+    "es2015": "./fesm2015/ngx-spellchecker.js",
+    "esm5": "./esm5/ngx-spellchecker.js",
+    "esm2015": "./esm2015/ngx-spellchecker.js",
+    "fesm5": "./fesm5/ngx-spellchecker.js",
+    "fesm2015": "./fesm2015/ngx-spellchecker.js",
+    "typings": "./ngx-spellchecker.d.ts",
+    "scripts": {
+        "build": "node build.js",
+        "test": "karma start",
+        "test:watch": "karma start karma.conf.js --single-run false",
+        "pack:lib": "npm run build && npm pack ./dist",
+        "publish:lib": "npm run build && npm publish ./dist",
+        "publish:lib:next": "npm run build && npm publish --tag next ./dist",
+        "compodoc": "compodoc -p tsconfig.json",
+        "compodoc:serve": "compodoc -s"
+    },
+    "author": "",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/jacobsamro/ngx-spellchecker.git"
+    },
+    "bugs": {
+        "url": "https://github.com/jacobsamro/ngx-spellchecker/issues"
+    },
+    "homepage": "https://github.com/jacobsamro/ngx-spellchecker",
+    "keywords": [
+        "angular",
+        "javascript",
+        "typescript"
+    ],
+    "license": "MIT",
+    "dependencies": {
+        "binarysearch": "^1.0.0",
+        "damerau-levenshtein": "git://github.com/cbaatz/damerau-levenshtein.git",
+        "strip-bom": "^4.0.0",
+        "tslib": "^1.9.0"
+    },
+    "peerDependencies": {
+        "@angular/common": ">= 7.0.0",
+        "@angular/core": ">= 7.0.0",
+        "rxjs": ">= 6.0.0"
+    },
+    "devDependencies": {
+        "@angular/animations": "7.0.0",
+        "@angular/common": "7.0.0",
+        "@angular/compiler": "7.0.0",
+        "@angular/compiler-cli": "7.0.0",
+        "@angular/core": "7.0.0",
+        "@angular/platform-browser": "7.0.0",
+        "@angular/platform-browser-dynamic": "7.0.0",
+        "@angular/platform-server": "7.0.0",
+        "@compodoc/compodoc": "1.1.7",
+        "@types/jasmine": "2.8.9",
+        "angular2-template-loader": "0.6.2",
+        "chalk": "2.4.1",
+        "codelyzer": "4.5.0",
+        "core-js": "2.5.7",
+        "css-loader": "1.0.0",
+        "istanbul-instrumenter-loader": "3.0.1",
+        "jasmine-core": "3.2.1",
+        "karma": "3.0.0",
+        "karma-chrome-launcher": "2.2.0",
+        "karma-coverage-istanbul-reporter": "2.0.4",
+        "karma-jasmine": "1.1.2",
+        "karma-sourcemap-loader": "0.3.7",
+        "karma-spec-reporter": "0.0.32",
+        "karma-webpack": "4.0.0-rc.2",
+        "node-sass": "4.9.4",
+        "raw-loader": "0.5.1",
+        "reflect-metadata": "0.1.12",
+        "rollup": "0.66.6",
+        "rollup-plugin-license": "0.7.0",
+        "rollup-plugin-node-resolve": "3.4.0",
+        "rollup-plugin-sourcemaps": "0.4.2",
+        "rxjs": "6.3.3",
+        "sass-loader": "7.1.0",
+        "shelljs": "0.8.2",
+        "source-map-loader": "0.2.4",
+        "to-string-loader": "1.1.5",
+        "ts-loader": "5.2.2",
+        "tsickle": "0.33.0",
+        "tslint": "5.11.0",
+        "tslint-angular": "1.1.2",
+        "typescript": "3.1.3",
+        "uglify-js": "3.4.9",
+        "webpack": "4.21.0",
+        "webpack-filter-warnings-plugin": "1.2.0",
+        "zone.js": "0.8.26"
+    },
+    "sideEffects": false
 }
