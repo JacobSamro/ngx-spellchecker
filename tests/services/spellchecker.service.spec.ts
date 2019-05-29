@@ -22,6 +22,8 @@ describe('SpellCheckerService', () => {
 
 
         expect(dictionary.spellCheck("testx")).toEqual(false);
+        expect(dictionary.spellCheck("test")).toEqual(true);
+        expect(dictionary.spellCheck("tomatto")).toEqual(true);
 
 
       })

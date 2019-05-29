@@ -130,9 +130,9 @@ export class BinarySearch {
   }
 
   static _defaultComparitor() {
-    var indexMode, indexModeSearch;
-    var stringMode;
-    return function (v, search) {
+    var indexMode:any, indexModeSearch:any;
+    var stringMode:any;
+    return function (v:any, search:any) {
       // support the object format of generated indexes
       if (indexMode === undefined) {
         if (typeof v === 'object' && v.hasOwnProperty('v')) indexMode = true;
