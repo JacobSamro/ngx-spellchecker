@@ -8,7 +8,7 @@ export class BinarySearch {
     // as long as it has a length i will try and itterate over it.
     if (arr.length === undefined) return;
 
-    if (!comparitor) comparitor = module.exports._defaultComparitor();
+    if (!comparitor) comparitor = BinarySearch._defaultComparitor();
 
     return BinarySearch.bs(arr, search, comparitor);
   }
@@ -16,10 +16,10 @@ export class BinarySearch {
 
 
   first(arr: any, search: any, comparitor: any) {
-    return module.exports.closest(arr, search, { exists: true }, comparitor);
+    return BinarySearch.closest(arr, search, { exists: true }, comparitor);
   }
   last(arr: any, search: any, comparitor: any) {
-    return module.exports.closest(arr, search, { exists: true, end: true }, comparitor);
+    return BinarySearch.closest(arr, search, { exists: true, end: true }, comparitor);
   }
 
   static closest(arr: any, search: any, opts: any, comparitor: any) {
@@ -58,7 +58,7 @@ export class BinarySearch {
       return 0;
     }
 
-    var closest = module.exports.closest(arr, search, comparitor);
+    var closest = BinarySearch.closest(arr, search, comparitor, undefined);
 
     var cmp: any = comparitor(arr[closest], search);
     if (cmp < 0) {//less
@@ -82,12 +82,12 @@ export class BinarySearch {
   }
 
   // this method returns the start and end indicies of a range. [start,end]
-  range(arr: { [x: string]: any; }, from: any, to: any, comparitor: { (arg0: any, arg1: any): number; (arg0: any, arg1: any): number; }) {
-    if (!comparitor) comparitor = module.exports._defaultComparitor();
+  static range(arr: { [x: string]: any; }, from: any, to: any, comparitor: { (arg0: any, arg1: any): number; (arg0: any, arg1: any): number; }) {
+    if (!comparitor) comparitor = BinarySearch._defaultComparitor();
 
-    var fromi = module.exports.closest(arr, from, comparitor);
+    var fromi = BinarySearch.closest(arr, from, comparitor, undefined);
 
-    var toi = module.exports.closest(arr, to, { end: true }, comparitor);
+    var toi = BinarySearch.closest(arr, to, { end: true }, comparitor);
 
     // this is a hack. 
     // i should be able to fix the algorithm and generate a correct range.
@@ -107,8 +107,8 @@ export class BinarySearch {
   }
 
   // this method returns the values of a range;
-  rangeValue(arr: { slice: (arg0: any, arg1: any) => void; }, from: any, to: any, comparitor: any) {
-    var range = module.exports.range(arr, from, to, comparitor);
+  static rangeValue(arr: any, from: any, to: any, comparitor: any) {
+    var range = BinarySearch.range(arr, from, to, comparitor);
     return arr.slice(range[0], range[1] + 1);
   }
 

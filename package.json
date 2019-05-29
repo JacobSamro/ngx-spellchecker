@@ -1,8 +1,8 @@
 {
     "name": "ngx-spellchecker",
-    "private": true,
-    "version": "0.0.1",
-    "description": "Build an Angular library compatible with AoT compilation and Tree shaking like an official package",
+    "private": false,
+    "version": "1.0.0",
+    "description": "A Simple Spell Checker for Angular Projects",
     "main": "./bundles/ngx-spellchecker.umd.js",
     "module": "./fesm5/ngx-spellchecker.js",
     "es2015": "./fesm2015/ngx-spellchecker.js",
@@ -37,9 +37,6 @@
     ],
     "license": "MIT",
     "dependencies": {
-        "binarysearch": "^1.0.0",
-        "damerau-levenshtein": "git://github.com/cbaatz/damerau-levenshtein.git",
-        "strip-bom": "^4.0.0",
         "tslib": "^1.9.0"
     },
     "peerDependencies": {
