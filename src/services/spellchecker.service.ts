@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs'
+import { Observable } from 'rxjs';
 
-import { Dictionary } from './dictionary'
+import { Dictionary } from './dictionary';
 
 @Injectable()
 export class SpellCheckerService {
