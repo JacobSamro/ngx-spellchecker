@@ -72,67 +72,16 @@ export class AppComponent implements OnInit {
 Methods
 -------
 
-### Module
-
-The module has three public methods: `getDictionary()`,  `getDictionarySync()` and `normalizeDictionary()`.
-
-#### getDictionary(fileName [, folderPath], callback)
-
-This method allows to get a `Dictionary` instance from a file. 
-
-Parameters:
- * `fileName`: The name of the dictionary's file. The method is going to first search a file with `.dic` extension, if not found, then is going to search a `.zip` and is going to unzip it.
- * `folderPath`: The folder in which the dictionary's file is located. This parameter is optional, by default it assumes that the file is in the `dict` folder.
- * `callback`: A function which is going to be invoked for return the `Dictionary` object.
-
-Example: 
-
-```javascript
-var SpellChecker = require('simple-spellchecker');
-SpellChecker.getDictionary("fr-FR", function(err, result) {
-    var dictionary = result;
-});    
-```
-
-#### getDictionarySync(fileName [, folderPath])
-
-This method allows to get a `Dictionary` instance from a file, in a synchronous way. Unlike `getDictionary`, this method can't open ZIP files.
-
-Parameters:
- * `fileName`: The name of the dictionary's file. The file must have `.dic` extension.
- * `folderPath`: The folder in which the dictionary's file is located. This parameter is optional, by default it assumes that the file is in the `dict` folder.
-
-Returns:
- * A `Dictionary` object. 
-
-Example: 
-
-```javascript
-var SpellChecker = require('simple-spellchecker');
-var dictionary = SpellChecker.getDictionarySync("fr-FR");    
-```
-
-#### normalizeDictionary(inputPath [, outputPath], callback)
-
-This methods reads a UTF-8 dictionary file, removes the BOM and `\r` characters and sorts the list of words.
-
-Parameters:
- * `inputPath`: The path of the dictionary file.
- * `outputPath`: The path for the normalized dictionary file. This parameter is optional, by deafult the original file is overwritten.
- * `callback`: A function which is going to be invoked when the process has finished.
-
-Example:
-
-```javascript
-var SpellChecker = require('simple-spellchecker');
-SpellChecker.normalizeDictionary(inputFile, outputFile, function(err, success) {
-    if(success) console.log("The file was normalized");
-}); 
-```   
-
 ### Dictionary
 
-The `Dictionary` class has six public methods: `getLength()`,  `setWordlist()`,  `spellCheck()`,  `isMisspelled()`,  `getSuggestions()` and `checkAndSuggest()`
+The `Dictionary` class has six public methods: 
+
+1. `getLength()`
+2. `setWordlist()`
+3. `spellCheck()`
+4. `isMisspelled()`
+5. `getSuggestions()`
+6. `checkAndSuggest()`
 
 #### getLength()
 
@@ -222,6 +171,9 @@ The file must be encoded in UTF8 (without BOM), the words must be separated with
 
 The module can remove all unwanted characters and sort the words, if you either invoke the `normalize()` method or pack the file in a ZIP file (the module automatically calls the `normalize()` method after unzip it).
 
+Credits
+-------
+This project is a fork of [José](https://github.com/jfmdev) originally written for [Node.JS & Electron](https://github.com/jfmdev/simple-spellchecker)
 
 
 License
