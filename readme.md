@@ -1,7 +1,7 @@
 Simple Spellchecker
 ===================
 
-> A simple and fast spellchecker for Angular
+> A simple spellchecker for Angular
 
 
 Features
@@ -65,6 +65,7 @@ export class AppComponent implements OnInit {
 
     })
 
+  }
 
 }
 ```
