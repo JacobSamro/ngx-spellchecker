@@ -1,37 +1,72 @@
 Simple Spellchecker
 ===================
 
-> A simple and fast spellchecker with spelling suggestions and Electron's integration
+> A simple and fast spellchecker for Angular
 
 
 Features
 --------
 
-**Simple Spellchecker** is a spellchecker module for Node.js, that allows to check if a word is misspelled and to get spelling suggestions.
+**Simple Spellchecker** is a spellchecker module for Angular, that allows to check if a word is misspelled and to get spelling suggestions.
 
 It comes with dictionaries for English, Spanish, French, German and Dutch, but you can easily add more languages by simply defining a text file with a list of valid words.
 
-It also has a CLI tool that allows to check words from the command line.
 
 Usage
 -----
 
 In order to use the module, you must first install it using NPM.
 
-    npm install simple-spellchecker
+    npm install ngx-spellchecker
+    
+or if you are using yarn
+    
+    yarn add ngx-spellchecker
 
-And then require the module, get a `Dictionary` object and invoke their methods.
+
+1. Import SpellCheckerModule
+```javascript
+import { SpellCheckerModule } from 'ngx-spellchecker';
+
+...
+
+@NgModule({
+   ...
+   imports: [
+     ...
+     SpellCheckerModule,
+    ...
+   ],
+   ...
+})
+export class AppModule {}
+```
+2. Use it in your components / service
 
 ```javascript
-var SpellChecker = require('simple-spellchecker');
-SpellChecker.getDictionary("fr-FR", function(err, dictionary) {
-    if(!err) {
-        var misspelled = ! dictionary.spellCheck('maisonn');
-        if(misspelled) {
-            var suggestions = dictionary.getSuggestions('maisonn');
-        }
+import { SpellCheckerService } from 'ngx-spellchecker';
+
+export class AppComponent implements OnInit {
+
+    fileURL = "https://raw.githubusercontent.com/JacobSamro/ngx-spellchecker/master/dict/normalized_en-US.dic"
+
+    constructor(private spellCheckerService: SpellCheckerService, private httpClient: HttpClient) {
+
     }
-});    
+
+    ngOnInit() {
+
+
+    this.httpClient.get(this.fileURL, { responseType: 'text' }).subscribe((res: any) => {
+
+      let dictionary = this.spellCheckerService.getDictionary(res)
+
+      console.log(dictionary.spellCheck("test"))
+
+    })
+
+
+}
 ```
 
 Methods
