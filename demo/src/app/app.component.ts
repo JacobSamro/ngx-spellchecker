@@ -28,16 +28,25 @@ export class AppComponent implements OnInit {
     this.httpClient.get(this.fileURL, { responseType: 'text' }).subscribe((res: any) => {
 
 
-      this.logs += "Initializing Dictionary\n"
 
-      let dictionary = this.spellCheckerService.getDictionary(res)
+      this.logs += "Normalizing Dictionary\n"
 
-      this.logs += "Dictionary Initialized\n"
+      this.spellCheckerService.normalizeDictionary(res).then((dic) => {
 
-      this.output += "<br/>The spelling of test is " + (dictionary.spellCheck("test"))
-      this.output += "<br/>The spelling of apple is " + (dictionary.spellCheck("apple"))
-      this.output += "<br/>The spelling of tommotto is " + (dictionary.spellCheck("tommotto"))
-      this.output += "<br/>The spelling of yellow is " + (dictionary.spellCheck("yellow"))
+        this.logs += "Initializing Dictionary\n"
+
+        let dictionary = this.spellCheckerService.getDictionary(dic)
+
+        this.logs += "Dictionary Initialized\n"
+
+        this.output += "<br/>The spelling of test is " + (dictionary.spellCheck("test"))
+        this.output += "<br/>The spelling of apple is " + (dictionary.spellCheck("apple"))
+        this.output += "<br/>The spelling of tommotto is " + (dictionary.spellCheck("tommotto"))
+        this.output += "<br/>The spelling of yellow is " + (dictionary.spellCheck("yellow"))
+
+      })
+
+
 
     })
 

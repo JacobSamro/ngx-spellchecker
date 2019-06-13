@@ -4198,9 +4198,9 @@ neo-async@^2.5.0, neo-async@^2.6.0:
   resolved "https://registry.yarnpkg.com/neo-async/-/neo-async-2.6.1.tgz#ac27ada66167fa8849a6addd837f6b189ad2081c"
   integrity sha512-iyam8fBuCUpWeKPGpaNMetEocMt364qkCsfL9JuhjXX6dRnguRVOfk2GZaDpPjcOKiiXCPINZC1GczQ7iTq3Zw==
 
-"ngx-spellchecker@file:../ngx-spellchecker-1.0.0.tgz":
-  version "1.0.0"
-  resolved "file:../ngx-spellchecker-1.0.0.tgz#8cee51b515604e7ba46d309e6cd4330005e08c34"
+"ngx-spellchecker@file:../ngx-spellchecker-1.0.1.tgz":
+  version "1.0.1"
+  resolved "file:../ngx-spellchecker-1.0.1.tgz#425adfad92bf4fb10800817166bf24972accbb95"
   dependencies:
     tslib "^1.9.0"
 
