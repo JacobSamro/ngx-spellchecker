@@ -109,7 +109,6 @@ export class Dictionary {
       // Search index of closest item.
       const closest = BinarySearch.closest(this.wordlist, word, Collator.compare);
 
-      console.log(closest)
       // Initialize variables for store results.
       const res: any = [];
       for (let i = 0; i <= maxDistance; i++) { res.push([]); }
@@ -121,7 +120,6 @@ export class Dictionary {
         k = closest + (i % 2 != 0 ? ((i + 1) / 2) : (-i / 2));
         if (k >= 0 && k < this.wordlist.length) {
           dist = Levenshtein(word, this.wordlist[k].toLowerCase()).steps;
-          console.log(this.wordlist[k])
           if (dist <= maxDistance) { res[dist].push(this.wordlist[k]); }
         }
       }
@@ -150,7 +148,6 @@ export class Dictionary {
     // Get suggestions.
     const suggestions: any = this.getSuggestions(word, limit + 1, maxDistance);
 
-    console.log(suggestions)
     // Prepare response.
     const res = { 'misspelled': true, 'suggestions': [] };
     res.misspelled = suggestions.length === 0 || suggestions[0].toLowerCase() !== word.toLowerCase();
