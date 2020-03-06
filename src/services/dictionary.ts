@@ -5,21 +5,23 @@
  */
 
 // Load dependencies.
-
-import { BinarySearch } from './binary-search';
-import { DamerauLevenshtein } from './damerau-levenshtein';
+// @ts-ignore
+const BinarySearch = require('binarysearch');
+// @ts-ignore
+const Levenshtein = require('damerau-levenshtein');
 
 // Use this object for consider accents and special characters when comparing UTF-8 strings.
-var Collator = new Intl.Collator(undefined, { 'sensitivity': 'accent' });
+const Collator = new Intl.Collator(undefined, { 'sensitivity': 'accent' });
 
-// The search for suggestions is going to be limited to words that are next to the position, in the word list, in which the word would be inserted.
-var SuggestRadius = 1000;
+// The search for suggestions is going to be limited to words that are next to the position,
+// in the word list, in which the word would be inserted.
+const SuggestRadius = 1000;
 
 
 export class Dictionary {
 
-  wordlist: any[]
-  regexs: any[]
+  wordlist: any[];
+  regexs: any[];
 
   /**
    * Creates an instance of Dictionary.
@@ -50,8 +52,8 @@ export class Dictionary {
    * @param {string[]} wordlist A sorted array of strings.
    */
   setWordlist(wordlist: any[]) {
-    if (wordlist != null && Array.isArray(wordlist)) this.wordlist = wordlist;
-  };
+    if (wordlist != null && Array.isArray(wordlist)) { this.wordlist = wordlist; }
+  }
 
   /**
    * Verify if a word is in the dictionary.
@@ -62,18 +64,18 @@ export class Dictionary {
 
   spellCheck(word: string) {
     // Verify if the word satifies one of the regular expressions.
-    for (var i = 0; i < this.regexs.length; i++) {
-      if (this.regexs[i].test(word)) return true;
+    for (let i = 0; i < this.regexs.length; i++) {
+      if (this.regexs[i].test(word)) { return true; }
     }
 
     // Since the list is sorted, is more fast to do a binary search than 'this.wordlist.indexOf(word)'.
-    var res: any = new BinarySearch().init(
+    const res: any = new BinarySearch(
       this.wordlist, // Haystack
       word.toLowerCase(), // Needle
       Collator.compare // Comparison method,
     );
     return res >= 0;
-  };
+  }
 
   /**
    * Verify if a word is misspelled.
@@ -83,7 +85,7 @@ export class Dictionary {
    */
   isMisspelled(word: string) {
     return !this.spellCheck(word);
-  };
+  }
 
   /**
    * Get a list of suggestions for a misspelled word.
@@ -93,40 +95,46 @@ export class Dictionary {
    * @param {number} maxDistance An integer indicating the maximum edit distance between the word and the suggestions (by default 3).
    * @return {string[]} An array of strings with the suggestions.
    */
-  getSuggestions(word: string, limit: number, maxDistance: number) {
-    let suggestions: any = [];
+  getSuggestions(word: string, limit: number = 5, maxDistance: number = 3) {
+
+    let suggestions: any[] = [];
+
     if (word != null && word.length > 0) {
       // Validate parameters.
       word = word.toLowerCase();
-      if (limit == null || isNaN(limit) || limit <= 0) limit = 5;
-      if (maxDistance == null || isNaN(maxDistance) || maxDistance <= 0) maxDistance = 2;
-      if (maxDistance >= word.length) maxDistance = word.length - 1;
+      if (limit == null || isNaN(limit) || limit <= 0) { limit = 5 };
+      if (maxDistance == null || isNaN(maxDistance) || maxDistance <= 0) { maxDistance = 2 };
+      if (maxDistance >= word.length) { maxDistance = word.length - 1 };
 
       // Search index of closest item.
-      var closest = BinarySearch.closest(this.wordlist, word, Collator.compare, undefined);
+      const closest = BinarySearch.closest(this.wordlist, word, Collator.compare);
 
+      console.log(closest)
       // Initialize variables for store results.
-      var res: any = [];
-      for (var i = 0; i <= maxDistance; i++) res.push([]);
+      const res: any = [];
+      for (let i = 0; i <= maxDistance; i++) { res.push([]); }
 
       // Search suggestions around the position in which the word would be inserted.
-      var k, dist: any;
-      for (var i = 0; i < SuggestRadius; i++) {
-        // The index 'k' is going to be 0, 1, -1, 2, -2... 
+      let k, dist;
+      for (let i = 0; i < SuggestRadius; i++) {
+        // The index 'k' is going to be 0, 1, -1, 2, -2...
         k = closest + (i % 2 != 0 ? ((i + 1) / 2) : (-i / 2));
         if (k >= 0 && k < this.wordlist.length) {
-          dist = new DamerauLevenshtein(word, this.wordlist[k].toLowerCase());
-          if (dist <= maxDistance) res[dist].push(this.wordlist[k]);
+          dist = Levenshtein(word, this.wordlist[k].toLowerCase()).steps;
+          console.log(this.wordlist[k])
+          if (dist <= maxDistance) { res[dist].push(this.wordlist[k]); }
         }
       }
 
       // Prepare result.
-      for (var d = 0; d <= maxDistance && suggestions.length < limit; d++) {
-        var remaining = limit - suggestions.length;
+      for (let d = 0; d <= maxDistance && suggestions.length < limit; d++) {
+        const remaining: any = limit - suggestions.length;
         suggestions = suggestions.concat((res[d].length > remaining) ? res[d].slice(0, remaining) : res[d]);
       }
     }
+
     return suggestions;
+
   }
 
   /**
@@ -138,21 +146,22 @@ export class Dictionary {
    * @return {Object} An object with the properties 'misspelled' (a boolean) and 'suggestions' (an array of strings).
    */
 
-  checkAndSuggest(word: string, limit: number, maxDistance: number) {
+  checkAndSuggest(word: string, limit: number = 5, maxDistance: number = 3) {
     // Get suggestions.
-    var suggestions = this.getSuggestions(word, limit + 1, maxDistance);
+    const suggestions: any = this.getSuggestions(word, limit + 1, maxDistance);
 
+    console.log(suggestions)
     // Prepare response.
-    var res = { 'misspelled': true, 'suggestions': [] };
-    res.misspelled = suggestions.length == 0 || suggestions[0].toLowerCase() != word.toLowerCase();
+    const res = { 'misspelled': true, 'suggestions': [] };
+    res.misspelled = suggestions.length === 0 || suggestions[0].toLowerCase() !== word.toLowerCase();
     res.suggestions = suggestions;
-    if (res.misspelled && (suggestions.length > limit)) res.suggestions = suggestions.slice(0, limit);
-    if (!res.misspelled) res.suggestions = suggestions.slice(1, suggestions.length);
+    if (res.misspelled && (suggestions.length > limit)) { res.suggestions = suggestions.slice(0, limit); }
+    if (!res.misspelled) { res.suggestions = suggestions.slice(1, suggestions.length); }
 
     // Verify if the word satifies one of the regular expressions.
     if (res.misspelled) {
-      for (var i = 0; i < this.regexs.length; i++) {
-        if (this.regexs[i].test(word)) res.misspelled = false;
+      for (let i = 0; i < this.regexs.length; i++) {
+        if (this.regexs[i].test(word)) { res.misspelled = false; }
       }
     }
 
@@ -168,7 +177,7 @@ export class Dictionary {
 
   addRegex(regex: any) {
     this.regexs.push(regex);
-  };
+  }
 
   /**
    * Clear the list of regultar expressions used to verify if a word is valid even though is not on the dictionary.
@@ -176,6 +185,6 @@ export class Dictionary {
 
   clearRegexs() {
     this.regexs = [];
-  };
+  }
 
 }

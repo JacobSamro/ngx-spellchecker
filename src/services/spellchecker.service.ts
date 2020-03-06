@@ -1,15 +1,14 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 
 import { Dictionary } from './dictionary';
 
 @Injectable()
 export class SpellCheckerService {
 
-    dictionaryURL = "https://raw.githubusercontent.com/JacobSamro/ngx-spellchecker/master/dict/normalized_en-US.dic"
+    dictionaryURL = 'https://raw.githubusercontent.com/JacobSamro/ngx-spellchecker/master/dict/normalized_en-US.dic';
 
     getDictionary(dictionary: any) {
-        return new Dictionary(dictionary.split('\n'))
+        return new Dictionary(dictionary.split('\n'));
     }
 
     /**
@@ -27,25 +26,25 @@ export class SpellCheckerService {
             content = content.replace(/\r/g, '');
 
             // Sort words.
-            var lines = content.split('\n');
-            var collator = new Intl.Collator(); // Use this comparator for consider accents and special characters.
+            let lines = content.split('\n');
+            const collator = new Intl.Collator(); // Use this comparator for consider accents and special characters.
             lines = lines.sort(collator.compare);
 
             // Generate output content.
-            var newContent = '';
-            var first = true;
-            for (var i = 0; i < lines.length; i++) {
-                if (lines[i] != '' && lines[i] != '\n') {
-                    if (!first) newContent += '\n';
+            let newContent = '';
+            let first = true;
+            for (let i = 0; i < lines.length; i++) {
+                if (lines[i] !== '' && lines[i] !== '\n') {
+                    if (!first) { newContent += '\n'; }
                     newContent += lines[i];
                     first = false;
                 }
             }
 
-            resolve(newContent)
+            resolve(newContent);
 
 
-        })
+        });
     }
 
     stripBOM(s: String): String {
