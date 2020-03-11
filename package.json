@@ -1,7 +1,7 @@
 {
     "name": "ngx-spellchecker",
     "private": false,
-    "version": "1.0.4",
+    "version": "1.0.5",
     "description": "A Simple Spell Checker for Angular Projects",
     "main": "./bundles/ngx-spellchecker.umd.js",
     "module": "./fesm5/ngx-spellchecker.js",
