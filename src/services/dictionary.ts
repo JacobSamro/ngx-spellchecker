@@ -69,7 +69,7 @@ export class Dictionary {
     }
 
     // Since the list is sorted, is more fast to do a binary search than 'this.wordlist.indexOf(word)'.
-    const res: any = new BinarySearch(
+    const res: any = BinarySearch(
       this.wordlist, // Haystack
       word.toLowerCase(), // Needle
       Collator.compare // Comparison method,
