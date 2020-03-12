@@ -39,7 +39,7 @@ export class AppComponent implements OnInit {
         this.output += '<br/>The spelling of tommotto is ' + (dictionary.spellCheck('tommotto'));
         this.output += '<br/>The spelling of yellow is ' + (dictionary.spellCheck('yellow'));
 
-        this.output += '<br/>Check and suggest ' + (JSON.stringify(dictionary.checkAndSuggest('yollow')));
+        this.output += '<br/>Check and suggest yollow' + (JSON.stringify(dictionary.checkAndSuggest('yollow')));
 
       });
 
